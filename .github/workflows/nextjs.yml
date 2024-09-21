@@ -28,11 +28,14 @@ jobs:
     - name: Build
       run: bun run build
 
+    - name: List directory contents
+      run: ls -R
+
     - name: Add .nojekyll file
-      run: touch out/.nojekyll
+      run: touch dist/.nojekyll
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         branch: gh-pages
-        folder: out
+        folder: dist
