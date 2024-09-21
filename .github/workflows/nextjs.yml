@@ -25,14 +25,17 @@ jobs:
     - name: Install dependencies
       run: bun install
 
+    - name: Update next.config.js
+      run: |
+        echo "/** @type {import('next').NextConfig} */" > next.config.js
+        echo "const nextConfig = {" >> next.config.js
+        echo "  output: 'export'," >> next.config.js
+        echo "  basePath: '/${{ github.event.repository.name }}'," >> next.config.js
+        echo "}" >> next.config.js
+        echo "module.exports = nextConfig" >> next.config.js
+
     - name: Build
       run: bun run build
-
-    - name: List directory contents
-      run: ls -R
-
-    - name: Add .nojekyll file
-      run: touch dist/.nojekyll
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
